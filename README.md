@@ -166,8 +166,7 @@ npm run test:coverage
 npm run build
 ```
 
-Use `npm run release -- <type>` to bump the version, update tags, and trigger
-publishing workflows.
+Use `npm version <type>` to bump the version; follow with `git push --follow-tags` to trigger publishing workflows.
 
 ## License
 

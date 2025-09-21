@@ -51,15 +51,15 @@
 - `npm run lint` – ESLint 9 flat config.
 - `npm run test` / `npm run test:coverage` – Jest with `ts-jest` in ESM mode.
 - `npm run build` – TypeScript build targeting `dist/` via `tsconfig.build.json`.
-- `npm run release -- <type>` – semantic version bump + tag push (requires a
-  configured git remote).
+- `npm version <type>` – semantic version bump + commit/tag (run `git push --follow-tags` afterwards).
 
 ## Release Checklist
 1. Update README, DEV_NOTES, and CHANGE_LOG with behavioural changes.
 2. Run `npm run lint`, `npm run test:coverage`, and `npm run build`.
 3. Ensure working tree is clean; commit relevant files only.
-4. `npm run release -- <type>` (use `minor` for new features, `patch` for fixes).
-5. Publish via GitHub Actions or `npm publish --provenance`.
+4. `npm version <type>` (use `minor` for new features, `patch` for fixes).
+5. `git push --follow-tags` to publish the bump.
+6. Publish via GitHub Actions or `npm publish --provenance`.
 
 ## Future Ideas
 - Priority-aware queues and route filters to mimic RMQ exchanges.

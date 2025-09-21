@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.1] - 2025-09-21
+### Changed
+- Removed the `release` npm script and refreshed docs to direct maintainers to `npm version <type>` plus `git push --follow-tags`.
+
 ## [0.2.0] - 2025-09-20
 - Implement `LocalQueue` with named queues, manual acks, retry limits, and
   dead-letter routing.
