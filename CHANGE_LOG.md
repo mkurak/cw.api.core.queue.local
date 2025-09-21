@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.4] - 2025-09-21
+### Changed
+- Removed automatic tagging from the commit hooks; version tags must now be pushed manually.
+
 ## [0.2.2] - 2025-09-21
 ### Added
 - Added a smoke test that publishes to a queue, consumes, and validates metrics to guard against regressions.

@@ -1,6 +1,6 @@
 {
   "name": "cw.api.core.queue.local",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Local in-memory queue for cw API applications",
   "type": "module",
   "main": "./dist/index.js",
