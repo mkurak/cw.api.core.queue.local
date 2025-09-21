@@ -18,6 +18,8 @@ git add --all
 
 run_step "Running lint checks" npm run lint
 run_step "Running coverage checks" npm run test:coverage
+run_step "Running build" npm run build
+run_step "Running smoke test" node scripts/smoke.mjs
 
 printf '\n[cw.api.core.queue.local] Pre-commit checks passed.\n'
 exit 0
