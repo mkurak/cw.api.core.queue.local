@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.2] - 2025-09-21
+### Added
+- Added a smoke test that publishes to a queue, consumes, and validates metrics to guard against regressions.
+### Changed
+- Release documentation now points to `npm version <type>` + `git push --follow-tags`.
+
 ## [0.2.1] - 2025-09-21
 ### Changed
 - Removed the `release` npm script and refreshed docs to direct maintainers to `npm version <type>` plus `git push --follow-tags`.
