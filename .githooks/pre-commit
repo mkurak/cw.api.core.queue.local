@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+run_step() {
+    local description="$1"
+    shift
+    printf '\n[cw.api.core.queue.local] %s...\n' "$description"
+    if ! "$@"; then
+        printf '\n[cw.api.core.queue.local] ERROR: %s failed (command: %s)\n' "$description" "$*" >&2
+        exit 1
+    fi
+}
+
+run_step "Formatting staged files" npm run format
+
+git add --all
+
+run_step "Validating package metadata" node scripts/validate-package-metadata.cjs
+
+run_step "Running lint checks" npm run lint
+run_step "Running coverage gate (>= thresholds)" npm run test:coverage
+
+printf '\n[cw.api.core.queue.local] Pre-commit checks passed.\n'
+exit 0

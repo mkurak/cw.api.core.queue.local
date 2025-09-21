@@ -1,0 +1,27 @@
+{
+  "modules": [
+    "base",
+    "hooks",
+    "release"
+  ],
+  "postInstall": {
+    "dependencies": [
+      "cw.helper.colored.console"
+    ],
+    "devDependencies": [
+      "cw.helper.dev.runner"
+    ],
+    "run": [
+      "npm install",
+      "npm run format",
+      "npm run lint -- --fix",
+      "npm run prepare"
+    ]
+  },
+  "git": {
+    "initialRelease": {
+      "enabled": true,
+      "type": "patch"
+    }
+  }
+}

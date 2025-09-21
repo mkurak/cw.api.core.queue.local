@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$branch" != "master" && "$branch" != "main" ]]; then
+    exit 0
+fi
+
+if ! git rev-parse HEAD^ >/dev/null 2>&1; then
+    exit 0
+fi
+
+if ! git diff-tree -r --name-only --no-commit-id HEAD^ HEAD | grep -q '^package.json$'; then
+    exit 0
+fi
+
+commit_message=$(git log -1 --pretty=%s)
+if [[ "$commit_message" =~ ^chore:\ release\ v ]]; then
+    exit 0
+fi
+
+current_version=$(node -p "(() => { try { return require('./package.json').version || ''; } catch { return ''; } })()")
+if [[ -z "$current_version" ]]; then
+    exit 0
+fi
+
+previous_version=$(git show HEAD^:package.json 2>/dev/null | node -p "(() => { try { return JSON.parse(require('node:fs').readFileSync(0, 'utf8')).version || ''; } catch { return ''; } })()" || true)
+
+if [[ -z "$previous_version" ]]; then
+    exit 0
+fi
+
+if [[ "$current_version" == "$previous_version" ]]; then
+    exit 0
+fi
+
+tag="v${current_version}"
+if git rev-parse "$tag" >/dev/null 2>&1; then
+    git tag -f "$tag"
+else
+    git tag "$tag"
+fi
+
+printf '\n[cw.api.core.queue.local] Tagged commit %s with %s (version %s -> %s).\n' "$(git rev-parse --short HEAD)" "$tag" "$previous_version" "$current_version"
+
+if ! git push --follow-tags >/dev/null 2>&1; then
+    printf '[cw.api.core.queue.local] Warning: automatic git push --follow-tags failed.\n' >&2
+fi
+
+exit 0
